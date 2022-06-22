@@ -52,8 +52,9 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y%m%d%s')"
-      - name: Get current date
-        id: date
+      
+      - name: Set env variable
+        id: set-env
         run: echo "::set-env name=IMAGE_TAG::${{ steps.date.outputs.date}}"
 
       # Build and push Docker image with Buildx (don't push on PR)
