@@ -62,7 +62,8 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_REGISTRY }}/gitops-app:latest, ${{ secrets.DOCKER_REGISTRY }}/gitops-app:${{ env.IMAGE_TAG }}
 
-      - name: output-tag
+      - name: Output tag
+        id: output-tag
         run: echo "::set-output name=tag::${{ env.IMAGE_TAG }}"
       - name: test-tag
         run: echo ${{ steps.output-tag.outputs.tag }}
