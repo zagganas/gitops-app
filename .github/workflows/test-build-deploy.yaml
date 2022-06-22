@@ -72,12 +72,10 @@ jobs:
     steps:
       - name: set-env-var
         run: echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
-  #     - name: Open PR in Environment Repository for new App Version
-  #       env:
-  #         ENV_REPO: ${{ github.event.repository.owner.name }}/gitops-env
-  #       uses: benc-uk/workflow-dispatch@v1.1
-  #       with:
-  #         workflow: New Application Version
-  #         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-  #         inputs: '{"tag_name": "${{ env.IMAGE_TAG }}", "app_repo": "${{ github.event.repository.name }}", "image": "${{ secrets.DOCKER_REGISTRY }}/${{ github.event.repository.name }}:${{ env.TAG_NAME }}"}'
-  #         ref: refs/heads/main
+      - name: Open PR in Environment Repository for new App Version
+        uses: benc-uk/workflow-dispatch@v1.1
+        with:
+          workflow: Deploy new app version
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          inputs: '{"tag_name": "${{ env.IMAGE_TAG }}", "app_repo": "${{ github.event.repository.name }}", "image": "${{ secrets.DOCKER_REGISTRY }}/${{ github.event.repository.name }}:${{ env.TAG_NAME }}"}'
+          ref: refs/heads/main
