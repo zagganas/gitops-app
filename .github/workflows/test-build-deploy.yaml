@@ -55,7 +55,7 @@ jobs:
       
       - name: Set env variable
         id: set-env
-        run: echo "IMAGE_TAG=$('%Y%m%d.%Y%m%d%s')" >> $GITHUB_ENV"
+        run: echo "IMAGE_TAG=$('%Y%m%d.%Y%m%d%s')" >> $GITHUB_ENV
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
