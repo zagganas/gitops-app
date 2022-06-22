@@ -55,7 +55,7 @@ jobs:
       
       - name: Set env variable
         id: set-env
-        run: echo echo "IMAGE_TAG=$(date +'%Y%m%d.%H%M%S')" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=$(date +'%Y%m%d.%H%M%S')" >> $GITHUB_ENV
 
       - name: output variable
         run: echo "${{ env.IMAGE_TAG }}"
