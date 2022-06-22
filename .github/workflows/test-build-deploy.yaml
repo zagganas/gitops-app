@@ -77,5 +77,6 @@ jobs:
         with:
           workflow: Deploy new app version
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          repo: zagganas/gitops-env
           inputs: '{"tag_name": "${{ env.IMAGE_TAG }}", "app_repo": "${{ github.event.repository.name }}", "image": "${{ secrets.DOCKER_REGISTRY }}/${{ github.event.repository.name }}:${{ env.TAG_NAME }}"}'
           ref: refs/heads/main
