@@ -9,29 +9,26 @@ on:
   push:
     branches: [ main ]
 
-env: 
-  IMAGE_TAG: '0'
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Test build
-        run: |
-            docker-compose up -d;
-            sleep 10;
-            CODE=$(curl -w '%{http_code}' \
-                  -SL \
-                  -o /dev/null \
-                  -X GET \
-                  localhost:8080/health)
-            if [[ $CODE != 200 ]]; then exit 1; fi;
-            docker-compose down;
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: read
+#       packages: write
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+#       - name: Test build
+#         run: |
+#             docker-compose up -d;
+#             sleep 10;
+#             CODE=$(curl -w '%{http_code}' \
+#                   -SL \
+#                   -o /dev/null \
+#                   -X GET \
+#                   localhost:8080/health)
+#             if [[ $CODE != 200 ]]; then exit 1; fi;
+#             docker-compose down;
   
   build:
     runs-on: ubuntu-latest
@@ -40,18 +37,14 @@ jobs:
       contents: read
       packages: write
     steps:
-      # Login against a Docker registry except on PR
-      # https://github.com/docker/login-action
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Log into registry
-        if: github.event_name != 'pull_request'
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_TOKEN }}
-
-      # - name: Get current date
-      #   id: date
-      #   run: echo "::set-output name=date::$(date +'%Y%m%d%s')"
       
       - name: Set env variable
         id: set-env
@@ -66,7 +59,7 @@ jobs:
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ github.event_name = 'push' }}
           tags: ${{ secrets.DOCKER_REGISTRY }}/gitops-app:latest, ${{ secrets.DOCKER_REGISTRY }}/gitops-app:${{ env.IMAGE_TAG }}
 
       - name: output variable
