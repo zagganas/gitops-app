@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+
+  webapp:
+    image: zagganas/gitops-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command: /bin/sh -c "cd /app; /app/.local/bin/gunicorn --chdir app app:app -w 2 --threads 2 -b 0.0.0.0:8080"
+    ports:
+      - "8080:8080"
