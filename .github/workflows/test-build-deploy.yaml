@@ -28,7 +28,7 @@ jobs:
   #                 -X GET \
   #                 localhost:8080/health)
   #           if [[ $CODE != 200 ]]; then exit 1; fi;
-            docker-compose down;
+            # docker-compose down;
   
   build:
     runs-on: ubuntu-latest
