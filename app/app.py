@@ -10,7 +10,7 @@ def health():
 @app.route("/ready")
 def ready():
 
-    return 'Hello\n',200
+    return 'Hello world\n',200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
